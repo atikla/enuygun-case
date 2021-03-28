@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Repository\ProviderRepositoryInterface;
+use App\Repository\UserRepositoryInterface;
+use App\Repository\ToDoRepositoryInterface;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\ToDo;
+use App\Models\User;
 
 class HomeController extends Controller
 {
 
-    private $userRepository;
-  
-    public function __construct(ProviderRepositoryInterface $userRepository)
+    private $user;
+    private $todo;
+
+    public function __construct(UserRepositoryInterface $user, ToDoRepositoryInterface $todo)
     {
-        $this->userRepository = $userRepository;
+        $this->user = $user;
+        $this->todo = $todo;
     }
     /**
      * Show the application dashboard.
@@ -22,7 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        dd($this->userRepository->all());
-        return view('home');
+        $todo  =$this->todo->all();
+        $users = $this->user->getAllOrderedByWithTodo($todo, 'level', 'desc');
+        return view('home', ['users' => $users]);
     }
 }

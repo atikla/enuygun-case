@@ -9,9 +9,7 @@ use Illuminate\Support\Collection;
 * Interface UserRepositoryInterface 
 * @package App\Repositories
 */
-interface UserRepositoryInterface 
+interface ToDoRepositoryInterface 
 {
    public function all(): Collection;
-
-   public function getAllOrderedByWithTodo($todo, $column, $order = 'asc'): Collection;
 }
