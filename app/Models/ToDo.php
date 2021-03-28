@@ -17,4 +17,9 @@ class ToDo extends Model
     protected $fillable = [
         'task_name', 'difficulty', 'duration'
     ];
+
+    public function provider()
+    {
+        return $this->belongsTo(Provider::class);
+    }
 }
